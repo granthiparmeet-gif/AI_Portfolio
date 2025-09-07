@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Secrets / env
+.env
+.env.*
+.streamlit/secrets.toml
+
+# Runtime/output
+research_briefs/
+
+# (If any Node/Next stuff exists)
+node_modules/
+.next/
+.vercel/
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local

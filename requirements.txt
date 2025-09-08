@@ -1,27 +1,30 @@
-# Core UI
-streamlit>=1.37.0
+# --- Core ---
 python-dotenv>=1.0.1
+streamlit>=1.37.0
 
-# LangChain ecosystem
+# --- LangChain ecosystem (latest stable split) ---
 langchain>=0.3.7
+langchain-core>=0.3.7
 langchain-community>=0.3.7
 langchain-openai>=0.3.7
 langchain-text-splitters>=0.3.2
 
-# OpenAI SDK
-openai>=1.40.0
-tiktoken>=0.7.0
+# --- OpenAI SDK ---
+openai>=1.42.0
 
-# Vector store for RAG
-faiss-cpu>=1.7.4
-
-# YouTube transcripts
+# --- Vector store & transcript for YouTube RAG ---
+faiss-cpu>=1.8.0
 youtube-transcript-api>=0.6.2
 
-# Research Agent (MCP + scraping)
-openai-agents>=0.2.9
-mcp>=1.2.0
-fastmcp>=0.3.0
+# --- PDF Parsing for Legal Analyzer ---
+pypdf>=4.0.2
+
+# --- Research Agent (web + parsing tools) ---
 trafilatura>=1.6.3
 beautifulsoup4>=4.12.3
 httpx>=0.27.2
+
+# --- Optional utilities ---
+pdfplumber>=0.11.0
+pypdf>=4.2.0
+pdfplumber>=0.11.0

@@ -1,53 +1,49 @@
 # common/exceptions.py
 
 class BaseAIError(Exception):
-    """Base class for all custom AI-related errors."""
+    """Base class for AI-related errors."""
     pass
 
 
-# ---------- YouTube RAG ----------
+# ----------------- YouTube RAG -----------------
 class RAGException(BaseAIError):
-    """General RAG pipeline error."""
+    """Base class for RAG-related errors."""
     pass
+
 
 class TranscriptNotFoundError(RAGException):
-    """Raised when transcript is missing for a YouTube video."""
+    """Raised when no transcript is available for the YouTube video."""
     pass
+
 
 class InvalidYouTubeURLError(RAGException):
     """Raised when the provided YouTube URL is invalid."""
     pass
 
+
 class OpenAIError(RAGException):
-    """Raised when an OpenAI API call fails."""
+    """Raised when an OpenAI API error occurs."""
     pass
 
 
-# ---------- NetZero Advisor ----------
+# ----------------- NetZero Advisor -----------------
 class NetZeroError(BaseAIError):
-    """General NetZero Advisor project error."""
+    """Raised when NetZero Advisor fails to generate a roadmap."""
     pass
 
 
-# ---------- Research Agent ----------
-class ResearchAgentError(BaseAIError):
-    """General Research Agent error."""
+# ----------------- Research Agent -----------------
+class ResearchError(BaseAIError):
+    """Raised when Research Agent fails to complete task."""
     pass
 
 
-# ---------- Chat With Code ----------
-class ChatWithCodeError(BaseAIError):
-    """General ChatWithCode project error."""
+# ----------------- Legal Doc Analyzer -----------------
+class ContractParseError(BaseAIError):
+    """Raised when PDF contract cannot be parsed."""
     pass
 
 
-# ---------- AI Knowledge Tutor ----------
-class TutorAgentError(BaseAIError):
-    """General AI Knowledge Tutor error."""
-    pass
-
-
-# ---------- Legal Document Analyzer ----------
-class LegalDocError(BaseAIError):
-    """General Legal Document Analyzer error."""
+class ContractAnalysisError(BaseAIError):
+    """Raised when LLM fails to analyze a contract."""
     pass

@@ -1,19 +1,20 @@
-from langgraph.graph import StateGraph, START, END
-from .schemas import State
-from .nodes import extractor_node, rag_node, calculator_node, advisor_node, writer_node
+from langgraph.graph import StateGraph
+from .nodes import extractor_agent, calculator_agent, advisor_agent, writer_agent
 
 def build_graph():
-    g = StateGraph(State)
-    g.add_node("extractor", extractor_node)
-    g.add_node("rag", rag_node)
-    g.add_node("calculator", calculator_node)
-    g.add_node("advisor", advisor_node)
-    g.add_node("writer", writer_node)
+    workflow = StateGraph(dict)
 
-    g.add_edge(START, "extractor")
-    g.add_edge("extractor", "rag")
-    g.add_edge("rag", "calculator")
-    g.add_edge("calculator", "advisor")
-    g.add_edge("advisor", "writer")
-    g.add_edge("writer", END)
-    return g.compile()
+    # Define nodes
+    workflow.add_node("extract", extractor_agent)
+    workflow.add_node("calculate", calculator_agent)
+    workflow.add_node("advise", advisor_agent)
+    workflow.add_node("write", writer_agent)
+
+    # Edges (sequential pipeline)
+    workflow.set_entry_point("extract")
+    workflow.add_edge("extract", "calculate")
+    workflow.add_edge("calculate", "advise")
+    workflow.add_edge("advise", "write")
+
+    workflow.set_finish_point("write")
+    return workflow.compile()

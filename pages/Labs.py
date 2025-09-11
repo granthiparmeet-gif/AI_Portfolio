@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="AI Labs", page_icon="🧪", layout="centered")
 
-st.title("🧪 AI Labs")
+st.title("AI Labs")
 st.write("Welcome to my collection of interactive AI projects. Explore the demos below:")
 
 # --- YouTube RAG ---

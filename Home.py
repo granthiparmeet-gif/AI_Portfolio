@@ -1,11 +1,11 @@
 import streamlit as st
 
-st.set_page_config(page_title="Parmeet Singh", page_icon="📚", layout="wide")
+st.set_page_config(page_title="Parmeet Singh", layout="wide")
 
 col1, col2 = st.columns([0.8, 2.2])
 
 with col1:
-    # Show profile image as a circle without Base64
+    # Show profile image as a circle using raw GitHub link
     st.markdown(
         """
         <style>
@@ -14,7 +14,7 @@ with col1:
             width: 200px;
         }
         </style>
-        <img src="parmeet.jpeg" class="profile-pic">
+        <img src="https://raw.githubusercontent.com/granthiparmeet-gif/AI_Portfolio/main/parmeet.jpeg" class="profile-pic">
         """,
         unsafe_allow_html=True,
     )
@@ -22,17 +22,17 @@ with col1:
 with col2:
     st.title(" Greetings, I am Parmeet Singh")
     st.write(
-    """
-    I am an **Agentic AI Engineer**, specializing in building intelligent and autonomous systems.  
-    My expertise includes:  
+        """
+        I am an **Agentic AI Engineer**, specializing in building intelligent and autonomous systems.  
+        My expertise includes:  
 
-    - **Autonomous Agents** that act beyond simple responses  
-    - **Retrieval-Augmented Generation (RAG) Pipelines** for grounded knowledge access  
-    - **Multi-Agent Workflows** powered by LangChain, CrewAI, AutoGen, and LangGraph  
-    - **MCP (Model Context Protocol) Servers** that connect models with real-world tools  
-    - Advanced applications built with the **OpenAI SDK**
-    """
-)
+        - **Autonomous Agents** that act beyond simple responses  
+        - **Retrieval-Augmented Generation (RAG) Pipelines** for grounded knowledge access  
+        - **Multi-Agent Workflows** powered by LangChain, CrewAI, AutoGen, and LangGraph  
+        - **MCP (Model Context Protocol) Servers** that connect models with real-world tools  
+        - Advanced applications built with the **OpenAI SDK**
+        """
+    )
 
 st.markdown("---")
 st.subheader("Explore My Labs")

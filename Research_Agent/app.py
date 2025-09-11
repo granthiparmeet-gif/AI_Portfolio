@@ -3,7 +3,7 @@ from .orchestrator import run_research
 from common.exceptions import BaseAIError
 
 def run_app():
-    st.title("🔎 Research Agent")
+    st.title("Research Agent")
 
     query = st.text_input("Enter your research question:")
     if st.button("Run Research"):

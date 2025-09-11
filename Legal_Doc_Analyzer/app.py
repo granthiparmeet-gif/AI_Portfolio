@@ -3,7 +3,7 @@ from .pipeline import analyze_contract
 from common.exceptions import BaseAIError
 
 def run_app():
-    st.title("📄 Legal Document Analyzer")
+    st.title("Legal Document Analyzer")
 
     uploaded_file = st.file_uploader("Upload a contract (PDF)", type=["pdf"])
     query = st.text_input("Ask a legal question about this contract:")

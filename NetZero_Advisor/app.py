@@ -3,7 +3,7 @@ from .graph import build_graph
 from common.exceptions import BaseAIError
 
 def run_app():
-    st.title("🌍 NetZero Advisor")
+    st.title("NetZero Advisor")
     st.write("Upload your sustainability report or energy dataset and generate a NetZero roadmap.")
 
     uploaded_file = st.file_uploader("Upload CSV or TXT", type=["csv", "txt"])

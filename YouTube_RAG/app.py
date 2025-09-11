@@ -3,7 +3,7 @@ from .pipeline import answer_question
 from common.exceptions import BaseAIError  # updated import
 
 def run_app():
-    st.title("YouTube RAG • (Latest LangChain)")
+    st.title("YouTube RAG")
 
     url = st.text_input("Enter a YouTube URL:")
     query = st.text_input("Ask a question about the video:")

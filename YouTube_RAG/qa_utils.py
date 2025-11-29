@@ -10,8 +10,8 @@ try:  # RetrievalQA only exists in newer releases
     from langchain.chains import RetrievalQA
 except ImportError:
     RetrievalQA = None
-    from langchain.chains.combine_documents import create_stuff_documents_chain
-    from langchain.chains.retrieval import create_retrieval_chain
+    create_stuff_documents_chain = None
+    create_retrieval_chain = None
 
 logger = get_logger(__name__)
 
@@ -46,11 +46,19 @@ def get_answer(question: str, retriever):
                 "answer": result.get("result", ""),
                 "context": result.get("source_documents", []),
             }
-        doc_chain = create_stuff_documents_chain(llm, _RAG_PROMPT)
-        rag_chain = create_retrieval_chain(retriever, doc_chain)
-        result = rag_chain.invoke({"input": question})
-        logger.info(f"Answered: {question[:60]} -> {result.get('answer','')[:60]}")
-        return {"answer": result.get("answer", ""), "context": result.get("context", [])}
+        if create_stuff_documents_chain is not None and create_retrieval_chain is not None:
+            doc_chain = create_stuff_documents_chain(llm, _RAG_PROMPT)
+            rag_chain = create_retrieval_chain(retriever, doc_chain)
+            result = rag_chain.invoke({"input": question})
+            logger.info(f"Answered: {question[:60]} -> {result.get('answer','')[:60]}")
+            return {"answer": result.get("answer", ""), "context": result.get("context", [])}
+        docs = retriever.get_relevant_documents(question)
+        context_str = "\n\n".join(doc.page_content or "" for doc in docs)
+        prompt = _RAG_PROMPT.format_prompt(input=question, context=context_str)
+        response = llm(messages=prompt.to_messages())
+        answer = response.generations[0][0].text.strip()
+        logger.info(f"Answered (manual): {question[:60]} -> {answer[:60]}")
+        return {"answer": answer, "context": docs}
     except Exception as e:
         logger.error(f"OpenAI/LangChain failed: {e}")
         raise OpenAIError("Something went wrong generating the answer.")

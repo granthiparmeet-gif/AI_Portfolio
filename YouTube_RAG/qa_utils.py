@@ -1,9 +1,17 @@
 import os
+from typing import Optional
+
 from langchain_openai import ChatOpenAI
-from langchain.chains import RetrievalQA
 from langchain_core.prompts import ChatPromptTemplate
 from common.logger import get_logger
 from common.exceptions import OpenAIError
+
+try:  # RetrievalQA only exists in newer releases
+    from langchain.chains import RetrievalQA
+except ImportError:
+    RetrievalQA = None
+    from langchain.chains.combine_documents import create_stuff_documents_chain
+    from langchain.chains.retrieval import create_retrieval_chain
 
 logger = get_logger(__name__)
 
@@ -24,19 +32,25 @@ def get_answer(question: str, retriever):
             temperature=0.1,
             api_key=os.getenv("OPENAI_API_KEY"),
         )
-        rag_chain = RetrievalQA.from_chain_type(
-            llm=llm,
-            retriever=retriever,
-            chain_type="stuff",
-            chain_type_kwargs={"prompt": _RAG_PROMPT},
-            return_source_documents=True,
-        )
-        result = rag_chain({"query": question})
-        logger.info(f"Answered: {question[:60]} -> {result.get('result','')[:60]}")
-        return {
-            "answer": result.get("result", ""),
-            "context": result.get("source_documents", []),
-        }
+        if RetrievalQA is not None:
+            rag_chain = RetrievalQA.from_chain_type(
+                llm=llm,
+                retriever=retriever,
+                chain_type="stuff",
+                chain_type_kwargs={"prompt": _RAG_PROMPT},
+                return_source_documents=True,
+            )
+            result = rag_chain({"query": question})
+            logger.info(f"Answered: {question[:60]} -> {result.get('result','')[:60]}")
+            return {
+                "answer": result.get("result", ""),
+                "context": result.get("source_documents", []),
+            }
+        doc_chain = create_stuff_documents_chain(llm, _RAG_PROMPT)
+        rag_chain = create_retrieval_chain(retriever, doc_chain)
+        result = rag_chain.invoke({"input": question})
+        logger.info(f"Answered: {question[:60]} -> {result.get('answer','')[:60]}")
+        return {"answer": result.get("answer", ""), "context": result.get("context", [])}
     except Exception as e:
         logger.error(f"OpenAI/LangChain failed: {e}")
         raise OpenAIError("Something went wrong generating the answer.")

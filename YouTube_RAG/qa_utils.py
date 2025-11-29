@@ -56,7 +56,13 @@ def get_answer(question: str, retriever):
             result = rag_chain.invoke({"input": question})
             logger.info(f"Answered: {question[:60]} -> {result.get('answer','')[:60]}")
             return {"answer": result.get("answer", ""), "context": result.get("context", [])}
-        docs = retriever.get_relevant_documents(question)
+        vectorstore = getattr(retriever, "vectorstore", None)
+        search_kwargs = dict(getattr(retriever, "search_kwargs", {}) or {})
+        search_kwargs.setdefault("k", 3)
+        if vectorstore:
+            docs = vectorstore.similarity_search(question, **search_kwargs)
+        else:
+            docs = []
         context_str = "\n\n".join(doc.page_content or "" for doc in docs)
         prompt = _RAG_PROMPT.format_prompt(input=question, context=context_str)
         response = llm(messages=prompt.to_messages())

@@ -31,7 +31,7 @@ st.write(
     "Ask English or Punjabi questions about the Gurbani manuscript. The assistant only answers "
     "from the provided OCR text and cites chunk IDs for every claim."
 )
-st.link_button("Open Demo", "03_Gurbani_OCR_RAG")
+st.link_button("Open Demo", "Gurbani_OCR_RAG")
 
 st.divider()
 st.caption("Built with LangChain, LangGraph, OpenAI SDK, CrewAI & FastAPI")

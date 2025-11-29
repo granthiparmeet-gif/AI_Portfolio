@@ -1,5 +1,4 @@
 import os
-from typing import Optional
 
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
@@ -10,6 +9,11 @@ try:  # RetrievalQA only exists in newer releases
     from langchain.chains import RetrievalQA
 except ImportError:
     RetrievalQA = None
+
+try:
+    from langchain.chains.combine_documents import create_stuff_documents_chain
+    from langchain.chains.retrieval import create_retrieval_chain
+except ImportError:  # keep fallback graceful
     create_stuff_documents_chain = None
     create_retrieval_chain = None
 
@@ -60,5 +64,5 @@ def get_answer(question: str, retriever):
         logger.info(f"Answered (manual): {question[:60]} -> {answer[:60]}")
         return {"answer": answer, "context": docs}
     except Exception as e:
-        logger.error(f"OpenAI/LangChain failed: {e}")
-        raise OpenAIError("Something went wrong generating the answer.")
+        logger.error(f"OpenAI/LangChain failed: {e}", exc_info=True)
+        raise OpenAIError(f"Something went wrong generating the answer: {e}")

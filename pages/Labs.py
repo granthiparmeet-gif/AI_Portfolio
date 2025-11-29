@@ -25,5 +25,13 @@ st.markdown("### Legal Document Analyzer")
 st.write("Upload contracts or agreements and let the AI extract key clauses, obligations, and risks.")
 st.link_button("Open Demo", "Legal_AI_Assistant")
 
+# --- Gurbani OCR RAG ---
+st.markdown("### Gurbani OCR RAG")
+st.write(
+    "Ask English or Punjabi questions about the Gurbani manuscript. The assistant only answers "
+    "from the provided OCR text and cites chunk IDs for every claim."
+)
+st.link_button("Open Demo", "Gurbani_OCR_RAG")
+
 st.divider()
 st.caption("Built with LangChain, LangGraph, OpenAI SDK, CrewAI & FastAPI")

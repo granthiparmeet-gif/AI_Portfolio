@@ -1,6 +1,7 @@
 # --- Core ---
 python-dotenv>=1.0.1
 streamlit>=1.37.0
+flask>=3.0.0
 
 # --- LangChain ecosystem (latest stable split) ---
 langchain>=0.3.7
@@ -16,6 +17,7 @@ openai>=1.42.0
 # --- Vector store & transcript for YouTube RAG ---
 faiss-cpu>=1.8.0
 youtube-transcript-api>=0.6.2
+numpy>=1.26.0
 
 # --- PDF Parsing for Legal Analyzer ---
 pypdf>=4.0.2

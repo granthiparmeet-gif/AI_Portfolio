@@ -1,7 +1,5 @@
 import streamlit as st
 
-from Gurbani_OCR_RAG.app import run_app as run_gurbani_app
-
 st.set_page_config(page_title="AI Labs", page_icon="🧪", layout="centered")
 
 st.title("AI Labs")
@@ -33,18 +31,7 @@ st.write(
     "Ask English or Punjabi questions about the Gurbani manuscript. The assistant only answers "
     "from the provided OCR text and cites chunk IDs for every claim."
 )
-
-if "gurbani_demo" not in st.session_state:
-    st.session_state["gurbani_demo"] = False
-
-if st.session_state["gurbani_demo"]:
-    if st.button("Hide Demo", key="gurbani_hide"):
-        st.session_state["gurbani_demo"] = False
-    st.divider()
-    run_gurbani_app(embed=True)
-else:
-    if st.button("Open Demo", key="gurbani_open"):
-        st.session_state["gurbani_demo"] = True
+st.link_button("Open Demo", "Gurbani_OCR_RAG")
 
 st.divider()
 st.caption("Built with LangChain, LangGraph, OpenAI SDK, CrewAI & FastAPI")

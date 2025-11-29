@@ -37,7 +37,7 @@ def _image_gallery():
     st.subheader("OCR source snapshots")
     cols = st.columns(len(images))
     for col, path in zip(cols, images):
-        col.image(str(path), caption=path.name, use_column_width=True)
+        col.image(str(path), caption=path.name, width=180)
 
 
 def run_app(embed: bool = False):
@@ -56,11 +56,13 @@ def run_app(embed: bool = False):
         st.error(str(err))
         return
 
+    st.markdown("**Ask your question:**")
     question = st.text_area(
-        "Ask your question:",
+        "",
         placeholder="Example: What life lesson is being highlighted in this passage?",
         key="gurbani_query",
-        height=160,
+        height=140,
+        label_visibility="collapsed",
     )
 
     state_answer_key = "gurbani_answer"

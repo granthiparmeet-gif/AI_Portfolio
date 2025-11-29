@@ -35,7 +35,9 @@ def _image_gallery():
     if not images:
         return
     st.subheader("OCR source snapshots")
-    st.image([str(p) for p in images], caption=[p.name for p in images], width=160)
+    cols = st.columns(len(images))
+    for col, path in zip(cols, images):
+        col.image(str(path), caption=path.name, use_column_width=True)
 
 
 def run_app(embed: bool = False):
@@ -46,6 +48,7 @@ def run_app(embed: bool = False):
         "Ask grounded questions in English or Punjabi and receive evidence-backed answers "
         "Citied directly from the OCR text extracted from Gurmukhi manuscripts."
     )
+    _image_gallery()
 
     try:
         client, index, chunks = _cached_resources()
@@ -93,4 +96,3 @@ def run_app(embed: bool = False):
     with col2:
         st.info("Sources are the cleaned OCR output from the Gurbani manuscript.")
         st.caption("Top chunks are re-used to keep the assistant grounded.")
-        _image_gallery()

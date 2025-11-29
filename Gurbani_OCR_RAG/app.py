@@ -38,8 +38,9 @@ def _image_gallery():
     st.image([str(p) for p in images], caption=[p.name for p in images], width=160)
 
 
-def run_app():
-    st.set_page_config(page_title="Gurbani OCR RAG", layout="wide")
+def run_app(embed: bool = False):
+    if not embed:
+        st.set_page_config(page_title="Gurbani OCR RAG", layout="wide")
     st.title("Gurbani OCR RAG Chatbot")
     st.write(
         "Ask grounded questions in English or Punjabi and receive evidence-backed answers "

@@ -37,7 +37,7 @@ def _image_gallery():
     st.subheader("OCR source snapshots")
     cols = st.columns(len(images))
     for col, path in zip(cols, images):
-        col.image(str(path), caption=path.name, width=180)
+        col.image(str(path), caption=path.name, use_column_width=True)
 
 
 def run_app(embed: bool = False):

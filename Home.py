@@ -33,6 +33,8 @@ with col2:
         - Advanced applications built with the **OpenAI SDK**
         """
     )
+    st.markdown("[Connect with me on LinkedIn](https://www.linkedin.com/in/parmeet-singh-granthi)")
+
 
 st.markdown("---")
 st.subheader("Explore My Labs")

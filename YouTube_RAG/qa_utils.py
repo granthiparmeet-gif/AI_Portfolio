@@ -59,14 +59,16 @@ def get_answer(question: str, retriever):
         vectorstore = getattr(retriever, "vectorstore", None)
         search_kwargs = dict(getattr(retriever, "search_kwargs", {}) or {})
         search_kwargs.setdefault("k", 3)
+
         if vectorstore:
             docs = vectorstore.similarity_search(question, **search_kwargs)
         else:
-            docs = []
+            docs = retriever.invoke(question) if hasattr(retriever, "invoke") else []
+
         context_str = "\n\n".join(doc.page_content or "" for doc in docs)
         prompt = _RAG_PROMPT.format_prompt(input=question, context=context_str)
-        response = llm(messages=prompt.to_messages())
-        answer = response.generations[0][0].text.strip()
+        response = llm.invoke(prompt.to_messages())
+        answer = response.content if hasattr(response, "content") else str(response)
         logger.info(f"Answered (manual): {question[:60]} -> {answer[:60]}")
         return {"answer": answer, "context": docs}
     except Exception as e:

@@ -17,3 +17,5 @@ st.write(
     Outside of code, I’m focused on making AI useful, reliable, and applied to real-world scenarios.
     """
 )
+
+st.markdown("[Connect with me on LinkedIn](https://www.linkedin.com/in/parmeet-singh-granthi)")
